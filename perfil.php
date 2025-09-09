@@ -36,7 +36,6 @@ $jogos = $stmt->fetchAll();
   <title>Meu Perfil</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="css/cores-dinamicas.css?v=<?= time() ?>">
   <style>
     /* Reset e Base */
     * {
@@ -78,6 +77,15 @@ $jogos = $stmt->fetchAll();
       filter: brightness(1.1);
     }
 
+    .header-title {
+      color: #fab201;
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
     .saldo {
       background: linear-gradient(135deg, #fab201, #f4c430);
       color: #000;
@@ -104,6 +112,7 @@ $jogos = $stmt->fetchAll();
       top: 72px;
       z-index: 50;
       backdrop-filter: blur(20px);
+      margin: 0 -20px;
     }
 
     .tab {
@@ -118,6 +127,10 @@ $jogos = $stmt->fetchAll();
       background: transparent;
       border: none;
       font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
     .tab.active {
@@ -220,11 +233,25 @@ $jogos = $stmt->fetchAll();
       border-radius: 12px;
       padding: 16px;
       transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #fab201, transparent);
+      animation: shimmer 4s infinite;
     }
 
     .info-item:hover {
       border-color: #fab201;
       transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(250, 178, 1, 0.1);
     }
 
     .info-label {
@@ -259,7 +286,7 @@ $jogos = $stmt->fetchAll();
     .transaction-item {
       padding: 16px 20px;
       border-bottom: 1px solid #21262d;
-      transition: background-color 0.3s ease;
+      transition: all 0.3s ease;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -382,6 +409,23 @@ $jogos = $stmt->fetchAll();
       justify-content: center;
       gap: 8px;
       font-size: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn:hover::before {
+      left: 100%;
     }
 
     .btn-primary {
@@ -404,6 +448,7 @@ $jogos = $stmt->fetchAll();
     .btn-secondary:hover {
       background: #2a2d34;
       border-color: #fab201;
+      transform: translateY(-2px);
     }
 
     .btn-danger {
@@ -428,11 +473,18 @@ $jogos = $stmt->fetchAll();
       font-size: 48px;
       color: #21262d;
       margin-bottom: 16px;
+      opacity: 0.7;
     }
 
     .empty-state h3 {
       color: #8b949e;
       margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .empty-state p {
+      font-size: 14px;
+      line-height: 1.6;
     }
 
     /* Bottom Navigation */
@@ -509,6 +561,14 @@ $jogos = $stmt->fetchAll();
 
       .transaction-item {
         padding: 12px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .transaction-amount {
+        text-align: left;
+        width: 100%;
       }
 
       .transaction-details h4 {
@@ -517,6 +577,19 @@ $jogos = $stmt->fetchAll();
 
       .transaction-details p {
         font-size: 11px;
+      }
+
+      .tabs {
+        margin: 0 -16px;
+      }
+
+      .tab {
+        font-size: 12px;
+        padding: 12px 8px;
+      }
+
+      .tab i {
+        font-size: 14px;
       }
     }
 
@@ -540,6 +613,115 @@ $jogos = $stmt->fetchAll();
         transform: translateY(0);
       }
     }
+
+    /* Profile Stats */
+    .profile-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: #0d1117;
+      border: 1px solid #21262d;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #fab201, transparent);
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      border-color: #fab201;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(250, 178, 1, 0.1);
+    }
+
+    .stat-card:hover::before {
+      left: 100%;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: 800;
+      color: #fab201;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #8b949e;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Welcome Section */
+    .welcome-section {
+      background: linear-gradient(135deg, #111318 0%, #1a1d24 100%);
+      border-radius: 16px;
+      padding: 32px 24px;
+      margin-bottom: 32px;
+      text-align: center;
+      border: 1px solid #2a2d34;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .welcome-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #fab201, transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    .welcome-section h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #fab201;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .welcome-section p {
+      color: #8b949e;
+      font-size: 16px;
+    }
+
+    /* Pulse animation for important elements */
+    .info-value.highlight {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { 
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% { 
+        transform: scale(1.05);
+        opacity: 0.9;
+      }
+    }
   </style>
 </head>
 
@@ -550,6 +732,9 @@ $jogos = $stmt->fetchAll();
       <div class="logo">
         <img src="images/<?= $logo ?>?v=<?= time() ?>" alt="Logo">
       </div>
+      <div class="header-title">
+        <i class="fas fa-user-circle"></i> Meu Perfil
+      </div>
       <div class="saldo">
         R$ <?= number_format($usuario['saldo'], 2, ',', '.') ?>
       </div>
@@ -559,19 +744,44 @@ $jogos = $stmt->fetchAll();
   <!-- Tabs -->
   <div class="tabs">
     <button class="tab active" onclick="openTab('perfil')">
-      <i class="fas fa-user"></i> Meu Perfil
+      <i class="fas fa-user"></i> <span>Perfil</span>
     </button>
     <button class="tab" onclick="openTab('transacoes')">
-      <i class="fas fa-exchange-alt"></i> Transações
+      <i class="fas fa-exchange-alt"></i> <span>Transações</span>
     </button>
     <button class="tab" onclick="openTab('jogos')">
-      <i class="fas fa-gamepad"></i> Histórico
+      <i class="fas fa-gamepad"></i> <span>Histórico</span>
     </button>
   </div>
 
   <div class="container">
     <!-- Tab Perfil -->
     <div id="perfil" class="tab-content active">
+      <!-- Welcome Section -->
+      <div class="welcome-section">
+        <h1>
+          <i class="fas fa-crown"></i>
+          Olá, <?= explode(' ', $usuario['nome'])[0] ?>!
+        </h1>
+        <p>Gerencie sua conta e acompanhe sua jornada conosco</p>
+      </div>
+
+      <!-- Profile Stats -->
+      <div class="profile-stats">
+        <div class="stat-card">
+          <div class="stat-value">R$ <?= number_format($usuario['saldo'], 2, ',', '.') ?></div>
+          <div class="stat-label">Saldo Atual</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value"><?= count($transacoes) ?></div>
+          <div class="stat-label">Transações</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value"><?= count($jogos) ?></div>
+          <div class="stat-label">Jogos</div>
+        </div>
+      </div>
+
       <!-- Informações do Perfil -->
       <div class="card">
         <h3><i class="fas fa-user-circle"></i> Informações Pessoais</h3>
@@ -582,7 +792,7 @@ $jogos = $stmt->fetchAll();
           </div>
           <div class="info-item">
             <div class="info-label">Telefone</div>
-            <div class="info-value"><?= htmlspecialchars($usuario['telefone']) ?></div>
+            <div class="info-value"><?= htmlspecialchars($usuario['telefone'] ?: 'Não informado') ?></div>
           </div>
           <div class="info-item">
             <div class="info-label">E-mail</div>
@@ -602,7 +812,7 @@ $jogos = $stmt->fetchAll();
           <a href="deposito.php" class="btn btn-primary">
             <i class="fas fa-plus"></i> Fazer Depósito
           </a>
-          <a href="sacar.php" class="btn btn-secondary">
+          <a href="saque.php" class="btn btn-secondary">
             <i class="fas fa-money-bill-wave"></i> Solicitar Saque
           </a>
           <a href="menu.php" class="btn btn-secondary">
@@ -708,7 +918,7 @@ $jogos = $stmt->fetchAll();
       <i class="fas fa-credit-card"></i>
       <span>Depositar</span>
     </a>
-    <a href="afiliado">
+    <a href="afiliados">
       <i class="fas fa-users"></i>
       <span>Afiliados</span>
     </a>
@@ -748,6 +958,19 @@ $jogos = $stmt->fetchAll();
           item.style.transform = 'translateX(0)';
         }, index * 100);
       });
+
+      // Animação dos stats
+      const statCards = document.querySelectorAll('.stat-card');
+      statCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'all 0.4s ease';
+        
+        setTimeout(() => {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, index * 150);
+      });
     });
 
     // Efeito de hover nos botões de ação
@@ -758,6 +981,16 @@ $jogos = $stmt->fetchAll();
       
       btn.addEventListener('mouseleave', function() {
         this.style.transform = 'translateY(0) scale(1)';
+      });
+    });
+
+    // Efeito de click nos cards de informação
+    document.querySelectorAll('.info-item').forEach(item => {
+      item.addEventListener('click', function() {
+        this.style.transform = 'scale(0.98)';
+        setTimeout(() => {
+          this.style.transform = 'scale(1)';
+        }, 150);
       });
     });
   </script>
